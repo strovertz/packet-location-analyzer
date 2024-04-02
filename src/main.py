@@ -56,7 +56,7 @@ def insert_locs(ips):
         if len(i) > 1: mapa = set_markup(mapa, i, ips[j])
         j+=1
     mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1])
-    mapa.save("map/my_map1.html")
+    mapa.save("../map/my_map1.html")
     print('Mapa Salvo')
 
 def main():
