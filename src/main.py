@@ -12,49 +12,40 @@ def package_load():
         print(res.text)
     exit()
 
-def count_ports(lista, lista2):
-    for i in lista:
-        x = i
-        d = Counter(lista2)
-        print('{} has occurred {} times'.format(x, d[x]))
-    print(lista)
-    print(lista2)
+#def count_ports(lista, lista2):
+#    for i in lista:
+#        x = i
+#        d = Counter(lista2)
+#        print('{} has occurred {} times'.format(x, d[x]))
+#    print(lista)
+#    print(lista2)
 
 #@thread6.threaded()
 def capture_package():
-    lista = []
-    lista2 = []
-    ips = []
-    bit = 0
+    lista = []; lista2 = []; ips = []; bit = 0
+    prefix = ['172', '192', '10.',  '127', '255']
     with pydivert.WinDivert() as w:
         for packet in w:
             #if packet.dst_addr == "3.95.214.97": # ip instancia ec2 com um api/rest rodando em docker
-            if packet.direction and packet.src_addr not in ips:
-                ips.append(packet.src_addr)
-            if not packet.direction:
-                if packet.dst_port not in lista:
-                    lista.append(packet.dst_port)
-                lista2.append(packet.dst_port)
-                print(packet)
-                print('\n \n \n')
-                bit+=1
+            if packet.direction and packet.src_addr not in ips and packet.src_addr[:3] not in prefix: ips.append(packet.src_addr)
+            print(packet)
+            # para checar a porta, implementar if para validar direção e checagem jogar a porta em uma lista
             w.send(packet)
-            if bit == 100:
-                break
-    count_ports(lista, lista2)
+            if bit == 100: break
+            bit+=1
+            #else: continue
     return ips
-            #else:
-            #w.send(packet)
+
 
 def insert_locs(ips):
     address = process_ips(ips)
-    my_location = [-29.6894956, -53.811126]
-    mapa = create_map(my_location)
+    mapa = create_map([-29.6894956, -53.811126])
     print(address)
     j = 0
     for i in address:
         print(i)
-        if len(i) > 1: infos = get_infos(ips[j]); mapa = set_markup(mapa, i, ips[j], infos)
+        infos = get_infos(ips[j])
+        mapa = set_markup(mapa, i, ips[j], infos)
         j+=1
     mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1], get_infos(ips[len(ips)-1]))
     mapa.save("../map/my_map1.html")

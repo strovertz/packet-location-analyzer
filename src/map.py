@@ -5,7 +5,7 @@ dicionarios = []
 dicionario = {}
 
 def set_markup(mapa, location, ip, infos):
-    popupe = "User IP: " + str(ip) + "\nCountryName: " + str(infos['data']['countryName']) + "\nUsageType: " + str(infos['data']['usageType']) + '\nIsp: ' + str(infos['data']['isp']) + '\nDomain: ' + str(infos['data']['domain']) + '\nisTor: ' + str(infos['data']['isTor']) + '\nabuseConfidenceScore:' + str(infos['data']['abuseConfidenceScore'])
+    popupe = "User IP: " + str(ip) + "\n | CountryName: " + str(infos['data']['countryName']) + "\n | UsageType: " + str(infos['data']['usageType']) + '\nIsp: ' + str(infos['data']['isp']) + '\n | Domain: ' + str(infos['data']['domain']) + '\n\n | isTor: ' + str(infos['data']['isTor']) + '\n | abuseConfidenceScore:' + str(infos['data']['abuseConfidenceScore'])
     folium.Marker([location[0], location[1]], popup = popupe, icon=folium.Icon(color='lightblue')).add_to(mapa)
     return mapa
 
