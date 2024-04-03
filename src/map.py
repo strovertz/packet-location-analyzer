@@ -4,8 +4,8 @@ coord_geo = []
 dicionarios = []
 dicionario = {}
 
-def set_markup(mapa, location, ip):
-    popupe = "User IP: " + str(ip) + "\n" + "Nome: " + str('teste') + "\n Born: " + str('tteste')
+def set_markup(mapa, location, ip, infos):
+    popupe = "User IP: " + str(ip) + "\nCountryName: " + str(infos['data']['countryName']) + "\nUsageType: " + str(infos['data']['usageType']) + '\nIsp: ' + str(infos['data']['isp']) + '\nDomain: ' + str(infos['data']['domain']) + '\nisTor: ' + str(infos['data']['isTor']) + '\nabuseConfidenceScore:' + str(infos['data']['abuseConfidenceScore'])
     folium.Marker([location[0], location[1]], popup = popupe, icon=folium.Icon(color='lightblue')).add_to(mapa)
     return mapa
 

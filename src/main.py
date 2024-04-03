@@ -39,7 +39,7 @@ def capture_package():
                 print('\n \n \n')
                 bit+=1
             w.send(packet)
-            if bit == 20:
+            if bit == 100:
                 break
     count_ports(lista, lista2)
     return ips
@@ -53,10 +53,12 @@ def insert_locs(ips):
     print(address)
     j = 0
     for i in address:
-        if len(i) > 1: mapa = set_markup(mapa, i, ips[j])
+        print(i)
+        if len(i) > 1: infos = get_infos(ips[j]); mapa = set_markup(mapa, i, ips[j], infos)
         j+=1
-    mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1])
+    mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1], get_infos(ips[len(ips)-1]))
     mapa.save("../map/my_map1.html")
+
     print('Mapa Salvo')
 
 def main():
