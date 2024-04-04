@@ -36,16 +36,15 @@ def capture_package():
             #else: continue
     return ips
 
-
 def insert_locs(ips):
     address = process_ips(ips)
     mapa = create_map([-29.6894956, -53.811126])
     print(address)
     j = 0
     for i in address:
-        print(i)
+        print(f'IP DE I AQUI: {i}')
         infos = get_infos(ips[j])
-        mapa = set_markup(mapa, i, ips[j], infos)
+        if len(i) > 1: mapa = set_markup(mapa, i, ips[j], infos)
         j+=1
     mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1], get_infos(ips[len(ips)-1]))
     mapa.save("../map/my_map1.html")
