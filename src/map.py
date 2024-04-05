@@ -10,8 +10,13 @@ def set_markup(mapa, location, ip, infos):
     return mapa
 
 def create_map(my_location):
-    #Retorna um mapa com a minha localização
-    mapa = folium.Map(location=[my_location[0], my_location[1]], zoom_start=1)
+    #Retorna um mapa com a "nossa localização"
+    mapa = folium.Map(location=[my_location[0], my_location[1]], zoom_start=1, tiles="https://demo.ldproxy.net/earthatnight/tiles/WebMercatorQuad/{z}/{y}/{x}?f=jpeg", attr='EarthAtNight')
+    #folium.TileLayer("StamenTerrain").add_to(mapa) # a intencao era adicionar uma overlay de terreno, mas parece q essa chamada ta com problema na lib
+    folium.TileLayer(show=False, overlay=True).add_to(mapa)
+
+    folium.LayerControl().add_to(mapa)
+
     popupe = "User IP: Strovertz" + "\n" + "Nome: Gleison Pires"
     folium.Marker([my_location[0], my_location[1]], popup = popupe, icon=folium.Icon(color='lightgreen', icon='home')).add_to(mapa)
     return mapa

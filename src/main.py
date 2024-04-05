@@ -1,6 +1,8 @@
 import pydivert
 import requests
 import thread6
+import os
+import webbrowser
 from scapy.utils import RawPcapReader
 from scapy.layers.l2 import Ether
 from scapy.layers.inet import IP
@@ -35,7 +37,7 @@ def capture_package():
             print(packet)
             # para checar a porta, implementar if para validar direção e checagem jogar a porta em uma lista
             w.send(packet)
-            if bit == 300: break
+            if bit == 1: break
             bit+=1
             #else: continue
     return ips
@@ -55,7 +57,7 @@ def read_pcap(file_path):
         if packet_ip.src[:3] not in prefix and packet_ip.src not in pcap_ips: pcap_ips.append(packet_ip.src)
     return pcap_ips
 
-def insert_locs(ips, mapa):
+def insert_locs(ips):
     mapa = create_map([-29.6894956, -53.811126])
     address = process_ips(ips)
     print(address)
@@ -64,17 +66,20 @@ def insert_locs(ips, mapa):
         if len(i) > 1: infos = get_infos(ips[j]); mapa = set_markup(mapa, i, ips[j], infos); print(f'Lat,Lon de ip \'{j}\': {i}')
         j+=1
     if len(address) > 0: mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1], get_infos(ips[len(ips)-1]))
-    mapa.save("../map/my_map1.html")
+    mapa.save("map/my_map1.html")
     print('Mapa Salvo em ../map/')
+    filename = 'file:///'+os.getcwd()+'/' + 'map/my_map1.html'
+    webbrowser.open_new_tab(filename)
 
 def main():
     file_path = "files/trabalho1.pcapng"
     #thread6.run_threaded(package_load)
     #thread6.run_threaded(capture_package)
     ip_capture = capture_package()
-    ip_pcap = read_pcap(file_path)
-    ips =  ip_capture + ip_pcap
+    #ip_pcap = read_pcap(file_path)
+    ips =  ip_capture #+ ip_pcap
     insert_locs(ips)
+
 
 if __name__ == "__main__":
     main()
