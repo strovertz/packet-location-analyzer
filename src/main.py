@@ -37,7 +37,7 @@ def capture_package():
             print(packet)
             # para checar a porta, implementar if para validar direção e checagem jogar a porta em uma lista
             w.send(packet)
-            if bit == 1: break
+            if bit == 300: break
             bit+=1
             #else: continue
     return ips
