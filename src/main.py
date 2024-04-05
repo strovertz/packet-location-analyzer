@@ -55,11 +55,9 @@ def read_pcap(file_path):
         if packet_ip.src[:3] not in prefix and packet_ip.src not in pcap_ips: pcap_ips.append(packet_ip.src)
     return pcap_ips
 
-
-
-def insert_locs(ips):
-    address = process_ips(ips)
+def insert_locs(ips, mapa):
     mapa = create_map([-29.6894956, -53.811126])
+    address = process_ips(ips)
     print(address)
     j = 0
     for i in address:
@@ -67,16 +65,16 @@ def insert_locs(ips):
         j+=1
     if len(address) > 0: mapa = set_markup(mapa,[len(address)-2,len(address)-1], ips[len(ips)-1], get_infos(ips[len(ips)-1]))
     mapa.save("../map/my_map1.html")
-
-    print('Mapa Salvo')
+    print('Mapa Salvo em ../map/')
 
 def main():
     file_path = "files/trabalho1.pcapng"
     #thread6.run_threaded(package_load)
     #thread6.run_threaded(capture_package)
-    #ips = capture_package()
-    ips2 = read_pcap(file_path)
-    insert_locs(ips2)
+    ip_capture = capture_package()
+    ip_pcap = read_pcap(file_path)
+    ips =  ip_capture + ip_pcap
+    insert_locs(ips)
 
 if __name__ == "__main__":
     main()
