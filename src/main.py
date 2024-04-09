@@ -76,8 +76,8 @@ def main():
     #thread6.run_threaded(package_load)
     #thread6.run_threaded(capture_package)
     ip_capture = capture_package()
-    #ip_pcap = read_pcap(file_path)
-    ips =  ip_capture #+ ip_pcap
+    ip_pcap = read_pcap(file_path)
+    ips =  ip_capture + ip_pcap
     insert_locs(ips)
 
 
